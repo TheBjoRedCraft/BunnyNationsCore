@@ -1,0 +1,19 @@
+name: BunnyNationsCore
+version: '1.0-SNAPSHOT'
+main: dev.thebjoredcraft.bunnynationscore.BunnyNationsCore
+api-version: '1.20'
+author: TheBjoRedCraft
+commands:
+  money:
+    permission: bunnynationscore.command.money
+  pay:
+    permission: bunnynationscore.command.pay
+  broadcastas:
+    permission: bunnynationscore.command.broadcastas
+    aliases:
+      - bcas
+  broadcast:
+    aliases:
+      - bc
+    permission: bunnynationscore.command.broadcast
+  rules:
