@@ -48,7 +48,7 @@ public final class BunnyNationsCore extends JavaPlugin {
         SellCommand.itemsToSell.put(Material.EMERALD, 20);
         SellCommand.itemsToSell.put(Material.OAK_LOG, 1);
         SellCommand.itemsToSell.put(Material.BLAZE_ROD, 50);
-        SellCommand.itemsToSell.put(Material.COAL, 25);
+        SellCommand.itemsToSell.put(Material.COAL, 10);
         SellCommand.itemsToSell.put(Material.DRAGON_HEAD, 1000);
         SellCommand.itemsToSell.put(Material.DRAGON_EGG, 1000000);
         SellCommand.itemsToSell.put(Material.ELYTRA, 10000);

@@ -44,25 +44,29 @@ public class EventManager implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
-        Player player = event.getPlayer();
-        if (event.getFrom().getBlockX() != event.getTo().getBlockX() || event.getFrom().getBlockZ() != event.getTo().getBlockZ()) {
-            if (PlayerDataManager.getAcceptedRules(player) == null) {
-                PlayerDataManager.setAcceptedRules(player, false);
-            } else {
-                if (!PlayerDataManager.getAcceptedRules(player)) {
-                    event.setCancelled(true);
-                    player.sendMessage(MiniMessage.miniMessage().deserialize("<red>Du musst die Regeln akzeptieren! -> /rules accept | Regeln: /rules"));
+        try {
+            Player player = event.getPlayer();
+            if (event.getFrom().getBlockX() != event.getTo().getBlockX() || event.getFrom().getBlockZ() != event.getTo().getBlockZ()) {
+                if (PlayerDataManager.getAcceptedRules(player) == null) {
+                    PlayerDataManager.setAcceptedRules(player, false);
+                } else {
+                    if (!PlayerDataManager.getAcceptedRules(player)) {
+                        event.setCancelled(true);
+                        player.sendMessage(MiniMessage.miniMessage().deserialize("<red>Du musst die Regeln akzeptieren! -> /rules accept | Regeln: /rules"));
+                    }
                 }
             }
-        }
-        if(player.getInventory().getItemInOffHand().getItemMeta() != null){
-            if(player.getInventory().getItemInOffHand().getItemMeta().displayName().equals(ShopManager.manaName)){
-                player.setWalkSpeed(0.6F);
-            }else{
+            if (player.getInventory().getItemInOffHand().getItemMeta() != null) {
+                if (player.getInventory().getItemInOffHand().getItemMeta().displayName().equals(ShopManager.manaName)) {
+                    player.setWalkSpeed(0.6F);
+                } else {
+                    player.setWalkSpeed(0.2F);
+                }
+            } else {
                 player.setWalkSpeed(0.2F);
             }
-        }else{
-            player.setWalkSpeed(0.2F);
+        }catch (NullPointerException ignored){
+            //
         }
     }
 
@@ -85,6 +89,11 @@ public class EventManager implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         if (event.getPlayer().hasPermission("bunnynationscore.portal.end.cooldown")) {
             BunnyNationsCore.setPermission(event.getPlayer(), "bunnynationscore.portal.end.cooldown", false);
+        }
+        try {
+            PlayerDataManager.getMoney(event.getPlayer());
+        }catch (NullPointerException e){
+            PlayerDataManager.setMoney(event.getPlayer(), 0);
         }
     }
 
@@ -311,8 +320,8 @@ public class EventManager implements Listener {
     }
     @EventHandler
     public void onEat(PlayerItemConsumeEvent event){
-        if(event.getItem() != null) {
-            if(event.getItem().getItemMeta() != null) {
+        if(event.getItem().getItemMeta() != null) {
+            if(event.getItem().getItemMeta().displayName() != null) {
                 if (event.getItem().getItemMeta().displayName().equals(ShopManager.ultra_gap)) {
                     event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 3600, 3));
                     event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 3600, 250));
@@ -325,18 +334,20 @@ public class EventManager implements Listener {
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
         if (event.getPlayer().getItemInHand().hasItemMeta()) {
-            if (event.getPlayer().getItemInHand().getItemMeta().displayName().equals(ShopManager.gluecky_name) && !event.getPlayer().getItemInHand().getItemMeta().hasEnchants()) {
+            if(event.getPlayer().getItemInHand().getItemMeta().displayName() != null) {
+                if (event.getPlayer().getItemInHand().getItemMeta().displayName().equals(ShopManager.gluecky_name) && !event.getPlayer().getItemInHand().getItemMeta().hasEnchants()) {
 
-                event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 4);
-                event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.DIG_SPEED, 7);
-                event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.DURABILITY, 5);
-                event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.MENDING, 1);
-            } else if (event.getPlayer().getItemInHand().getItemMeta().displayName().equals(ShopManager.diapicke_name) && !event.getPlayer().getItemInHand().getItemMeta().hasEnchants()) {
+                    event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 4);
+                    event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.DIG_SPEED, 7);
+                    event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.DURABILITY, 5);
+                    event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                } else if (event.getPlayer().getItemInHand().getItemMeta().displayName().equals(ShopManager.diapicke_name) && !event.getPlayer().getItemInHand().getItemMeta().hasEnchants()) {
 
-                event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.SILK_TOUCH, 1);
-                event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.DIG_SPEED, 7);
-                event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.DURABILITY, 5);
-                event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                    event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.SILK_TOUCH, 1);
+                    event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.DIG_SPEED, 7);
+                    event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.DURABILITY, 5);
+                    event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                }
             }
         }
     }
@@ -345,19 +356,21 @@ public class EventManager implements Listener {
         if(event.getDamager() instanceof Player player){
             if (player.getItemInHand() != null) {
                 if (player.getItemInHand().getItemMeta() != null) {
-                    if (player.getItemInHand().getItemMeta().displayName().equals(ShopManager.diamond_sword_name) && !player.getItemInHand().getItemMeta().hasEnchants()) {
-                        player.getItemInHand().addUnsafeEnchantment(Enchantment.DURABILITY, 5);
-                        player.getItemInHand().addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 7);
-                        player.getItemInHand().addUnsafeEnchantment(Enchantment.MENDING, 1);
-                        player.getItemInHand().addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-                        player.getItemInHand().addUnsafeEnchantment(Enchantment.LOOT_BONUS_MOBS, 4);
-                    } else if (player.getItemInHand().getItemMeta().displayName().equals(ShopManager.monster_hunter) && !player.getItemInHand().getItemMeta().hasEnchants()) {
-                        player.getItemInHand().addUnsafeEnchantment(Enchantment.DURABILITY, 5);
-                        player.getItemInHand().addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 7);
-                        player.getItemInHand().addUnsafeEnchantment(Enchantment.DAMAGE_ARTHROPODS, 7);
-                        player.getItemInHand().addUnsafeEnchantment(Enchantment.MENDING, 1);
-                        player.getItemInHand().addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-                        player.getItemInHand().addUnsafeEnchantment(Enchantment.LOOT_BONUS_MOBS, 4);
+                    if (player.getItemInHand().getItemMeta().displayName() != null) {
+                        if (player.getItemInHand().getItemMeta().displayName().equals(ShopManager.diamond_sword_name) && !player.getItemInHand().getItemMeta().hasEnchants()) {
+                            player.getItemInHand().addUnsafeEnchantment(Enchantment.DURABILITY, 5);
+                            player.getItemInHand().addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 10);
+                            player.getItemInHand().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                            player.getItemInHand().addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
+                            player.getItemInHand().addUnsafeEnchantment(Enchantment.LOOT_BONUS_MOBS, 4);
+                        } else if (player.getItemInHand().getItemMeta().displayName().equals(ShopManager.monster_hunter) && !player.getItemInHand().getItemMeta().hasEnchants()) {
+                            player.getItemInHand().addUnsafeEnchantment(Enchantment.DURABILITY, 5);
+                            player.getItemInHand().addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 7);
+                            player.getItemInHand().addUnsafeEnchantment(Enchantment.DAMAGE_ARTHROPODS, 7);
+                            player.getItemInHand().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                            player.getItemInHand().addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
+                            player.getItemInHand().addUnsafeEnchantment(Enchantment.LOOT_BONUS_MOBS, 4);
+                        }
                     }
                 }
             }
@@ -367,40 +380,48 @@ public class EventManager implements Listener {
     public void onDamage(EntityDamageEvent event){
         if(event.getEntity() instanceof Player player){
             if(player.getInventory().getHelmet() != null){
-                if(player.getInventory().getHelmet().getItemMeta().displayName().equals(ShopManager.helm)) {
-                    player.getInventory().getHelmet().addUnsafeEnchantment(Enchantment.MENDING, 1);
-                    player.getInventory().getHelmet().addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
-                    player.getInventory().getHelmet().addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-                    player.getInventory().getHelmet().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                if(player.getInventory().getHelmet().getItemMeta().displayName() != null) {
+                    if (player.getInventory().getHelmet().getItemMeta().displayName().equals(ShopManager.helm)) {
+                        player.getInventory().getHelmet().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                        player.getInventory().getHelmet().addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
+                        player.getInventory().getHelmet().addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+                        player.getInventory().getHelmet().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                    }
                 }
             }
             if(player.getInventory().getChestplate() != null) {
-                if(player.getInventory().getChestplate().getItemMeta().displayName().equals(ShopManager.chestplate)){
-                    player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.MENDING, 1);
-                    player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
-                    player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 5);
-                    player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-                    player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                if(player.getInventory().getHelmet().getItemMeta().displayName() != null) {
+                    if (player.getInventory().getChestplate().getItemMeta().displayName().equals(ShopManager.chestplate)) {
+                        player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                        player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
+                        player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 5);
+                        player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+                        player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                    }
                 }
             }
             if (player.getInventory().getLeggings() != null) {
-                if(player.getInventory().getLeggings().getItemMeta().displayName().equals(ShopManager.leggings)) {
-                    player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.MENDING, 1);
-                    player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
-                    player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 5);
-                    player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-                    player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                if(player.getInventory().getHelmet().getItemMeta().displayName() != null) {
+                    if (player.getInventory().getLeggings().getItemMeta().displayName().equals(ShopManager.leggings)) {
+                        player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                        player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
+                        player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 5);
+                        player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+                        player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                    }
                 }
             }
             if (player.getInventory().getBoots() != null) {
-                if(player.getInventory().getBoots().getItemMeta().displayName().equals(ShopManager.boots)) {
-                    player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.MENDING, 1);
-                    player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
-                    player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 5);
-                    player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.WATER_WORKER, 5);
-                    player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.SOUL_SPEED, 5);
-                    player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-                    player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                if (player.getInventory().getHelmet().getItemMeta().displayName() != null) {
+                    if (player.getInventory().getBoots().getItemMeta().displayName().equals(ShopManager.boots)) {
+                        player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                        player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
+                        player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 5);
+                        player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.WATER_WORKER, 5);
+                        player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.SOUL_SPEED, 5);
+                        player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+                        player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                    }
                 }
             }
         }
@@ -420,17 +441,19 @@ public class EventManager implements Listener {
         Player player = event.getPlayer();
 
         if(player.getInventory().getItemInOffHand().getItemMeta() != null){
-            if(player.getInventory().getItemInOffHand().getItemMeta().displayName().equals(ShopManager.manaBoostName)){
-                if(!event.getPlayer().hasPermission("bunnynationscore.boost.cooldown")){
-                    Vector boostDirection = event.getPlayer().getLocation().getDirection().normalize().multiply(2);
-                    event.getPlayer().setVelocity(boostDirection);
+            if(player.getInventory().getItemInOffHand().getItemMeta().displayName() != null) {
+                if (player.getInventory().getItemInOffHand().getItemMeta().displayName().equals(ShopManager.manaBoostName)) {
+                    if (!event.getPlayer().hasPermission("bunnynationscore.boost.cooldown")) {
+                        Vector boostDirection = event.getPlayer().getLocation().getDirection().normalize().multiply(2);
+                        event.getPlayer().setVelocity(boostDirection);
 
-                    BunnyNationsCore.setPermission(event.getPlayer(), "bunnynationscore.boost.cooldown", true);
-                    BunnyNationsCore.getInstance().getServer().getScheduler().runTaskLater(BunnyNationsCore.getInstance(), () -> {
-                        BunnyNationsCore.setPermission(event.getPlayer(), "bunnynationscore.boost.cooldown", false);
-                    }, 120);
-                }else{
-                    event.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Bitte warte einen Moment!"));
+                        BunnyNationsCore.setPermission(event.getPlayer(), "bunnynationscore.boost.cooldown", true);
+                        BunnyNationsCore.getInstance().getServer().getScheduler().runTaskLater(BunnyNationsCore.getInstance(), () -> {
+                            BunnyNationsCore.setPermission(event.getPlayer(), "bunnynationscore.boost.cooldown", false);
+                        }, 120);
+                    } else {
+                        event.getPlayer().sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Bitte warte einen Moment!"));
+                    }
                 }
             }
         }

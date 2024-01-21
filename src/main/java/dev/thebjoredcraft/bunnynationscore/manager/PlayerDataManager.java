@@ -8,6 +8,7 @@ import org.bukkit.persistence.PersistentDataType;
 public class PlayerDataManager {
     public static NamespacedKey rules = new NamespacedKey(BunnyNationsCore.getInstance(), "accepted_rules");
     public static NamespacedKey money = new NamespacedKey(BunnyNationsCore.getInstance(), "money");
+
     public static void setAcceptedRules(Player player, Boolean arg){
         player.getPersistentDataContainer().set(rules, PersistentDataType.BOOLEAN, arg);
     }
@@ -17,7 +18,7 @@ public class PlayerDataManager {
     public static void setMoney(Player player, int count){
         player.getPersistentDataContainer().set(money, PersistentDataType.INTEGER, count);
     }
-    public static int getMoney(Player player){
+        public static int getMoney(Player player){
         return player.getPersistentDataContainer().get(money, PersistentDataType.INTEGER);
     }
     public static void addMoney(Player player, int count){

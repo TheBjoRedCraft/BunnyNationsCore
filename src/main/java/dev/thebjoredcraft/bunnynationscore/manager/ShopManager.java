@@ -105,7 +105,7 @@ public class ShopManager {
         player.openInventory(sellShop);
     }
     public static void spawnBuyTrader(Location loc){
-        Entity trader = loc.getWorld().spawnEntity(loc, EntityType.WITCH);
+        Entity trader = loc.getWorld().spawnEntity(loc, EntityType.VILLAGER);
 
         trader.setCustomNameVisible(true);
         trader.customName(MiniMessage.miniMessage().deserialize("<bold>Verkauf"));

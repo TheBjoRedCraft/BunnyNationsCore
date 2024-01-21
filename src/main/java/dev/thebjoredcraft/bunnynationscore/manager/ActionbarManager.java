@@ -16,12 +16,16 @@ public class ActionbarManager {
     public static Boolean custom;
 
     public static void sendActionbar(){
-        for(Player player : Bukkit.getOnlinePlayers()){
-            if(custom){
-                player.sendActionBar(MiniMessage.miniMessage().deserialize(messages.get(2).replace("%playername%", player.getName())));
-            }else{
-                player.sendActionBar(MiniMessage.miniMessage().deserialize(messages.get(1).replace("%money%", String.valueOf(PlayerDataManager.getMoney(player)))));
+        try {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (custom) {
+                    player.sendActionBar(MiniMessage.miniMessage().deserialize(messages.get(2).replace("%playername%", player.getName())));
+                } else {
+                    player.sendActionBar(MiniMessage.miniMessage().deserialize(messages.get(1).replace("%money%", String.valueOf(PlayerDataManager.getMoney(player)))));
+                }
             }
+        }catch (NullPointerException ignored){
+            //
         }
     }
     public static void startActionbar(){
