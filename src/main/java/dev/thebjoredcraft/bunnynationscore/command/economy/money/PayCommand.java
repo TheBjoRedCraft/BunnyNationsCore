@@ -1,4 +1,4 @@
-package dev.thebjoredcraft.bunnynationscore.command.money;
+package dev.thebjoredcraft.bunnynationscore.command.economy.money;
 
 import dev.thebjoredcraft.bunnynationscore.manager.PlayerDataManager;
 import org.bukkit.Bukkit;

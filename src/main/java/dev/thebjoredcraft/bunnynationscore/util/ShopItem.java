@@ -1,6 +1,7 @@
 package dev.thebjoredcraft.bunnynationscore.util;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -45,6 +46,11 @@ public class ShopItem extends ItemStack {
         ArrayList<Component> lore = new ArrayList<>();
 
         lore.add(data.getLore());
+        if(data.getPrize() == 0) {
+            lore.add(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du kannst dieses Item nicht kaufen!"));
+        }else{
+            lore.add(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Preis: " + data.getPrize() + " Taler"));
+        }
         meta.displayName(data.getDisplayName());
         meta.lore(lore);
         meta.setLocalizedName(String.valueOf(data.getId()));

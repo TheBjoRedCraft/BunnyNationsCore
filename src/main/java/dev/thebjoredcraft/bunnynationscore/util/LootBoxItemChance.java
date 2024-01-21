@@ -1,5 +1,6 @@
 package dev.thebjoredcraft.bunnynationscore.util;
 
+
 public class LootBoxItemChance {
 
     private final LootBoxItems item;
