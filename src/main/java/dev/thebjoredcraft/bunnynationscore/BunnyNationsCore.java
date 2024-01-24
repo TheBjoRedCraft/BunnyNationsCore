@@ -1,6 +1,7 @@
 package dev.thebjoredcraft.bunnynationscore;
 
 import dev.thebjoredcraft.bunnynationscore.command.ActionbarCommand;
+import dev.thebjoredcraft.bunnynationscore.command.SeeArmorCommand;
 import dev.thebjoredcraft.bunnynationscore.command.ShopCommand;
 import dev.thebjoredcraft.bunnynationscore.command.economy.SellCommand;
 import dev.thebjoredcraft.bunnynationscore.command.broadcast.BroadcastAsCommand;
@@ -38,22 +39,23 @@ public final class BunnyNationsCore extends JavaPlugin {
         getCommand("shop").setExecutor(new ShopCommand());
         getCommand("actionbar").setExecutor(new ActionbarCommand());
         getCommand("sell").setExecutor(new SellCommand());
+        getCommand("armorsee").setExecutor(new SeeArmorCommand());
         Bukkit.getPluginManager().registerEvents(new EventManager(), this);
         ActionbarManager.startActionbar();
         // Plugin startup logic
 
-        SellCommand.itemsToSell.put(Material.DIAMOND, 50);
-        SellCommand.itemsToSell.put(Material.IRON_INGOT, 25);
-        SellCommand.itemsToSell.put(Material.GOLD_INGOT, 50);
-        SellCommand.itemsToSell.put(Material.EMERALD, 20);
+        SellCommand.itemsToSell.put(Material.DIAMOND, 15);
+        SellCommand.itemsToSell.put(Material.IRON_INGOT, 10);
+        SellCommand.itemsToSell.put(Material.GOLD_INGOT, 10);
+        SellCommand.itemsToSell.put(Material.EMERALD, 15);
         SellCommand.itemsToSell.put(Material.OAK_LOG, 1);
-        SellCommand.itemsToSell.put(Material.BLAZE_ROD, 50);
+        SellCommand.itemsToSell.put(Material.BLAZE_ROD, 15);
         SellCommand.itemsToSell.put(Material.COAL, 10);
         SellCommand.itemsToSell.put(Material.DRAGON_HEAD, 1000);
         SellCommand.itemsToSell.put(Material.DRAGON_EGG, 1000000);
         SellCommand.itemsToSell.put(Material.ELYTRA, 10000);
         SellCommand.itemsToSell.put(Material.DRAGON_BREATH, 1000);
-        SellCommand.itemsToSell.put(Material.ENCHANTED_GOLDEN_APPLE, 100000);
+        SellCommand.itemsToSell.put(Material.ENCHANTED_GOLDEN_APPLE, 10000);
         SellCommand.itemsToSell.put(Material.GOLDEN_APPLE, 100);
         SellCommand.itemsToSell.put(Material.GOLDEN_CARROT, 100);
 

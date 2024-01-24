@@ -1,5 +1,6 @@
 package dev.thebjoredcraft.bunnynationscore.command;
 
+import dev.thebjoredcraft.bunnynationscore.gui.BuyGraphicalUserInterfaceOne;
 import dev.thebjoredcraft.bunnynationscore.manager.ShopManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,7 +15,7 @@ public class ShopCommand implements CommandExecutor {
             if(args.length == 1 && args[0].equalsIgnoreCase("setup")){
                 ShopManager.spawnBuyTrader(player.getLocation());
             }else{
-                ShopManager.openShopGUI(player);
+                BuyGraphicalUserInterfaceOne.open(player);
             }
         }
         return false;

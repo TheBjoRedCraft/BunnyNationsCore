@@ -21,46 +21,68 @@ public class ShopManager {
     public static String traderSellTag = "bunnynations:trader:id:6548795758745865704986450968867784867476776779348968767787";
 
     public static Inventory shop = Bukkit.createInventory(null, 54, MiniMessage.miniMessage().deserialize("<bold>Verkauf"));
+    public static Inventory shop1 = Bukkit.createInventory(null, 54, MiniMessage.miniMessage().deserialize("<bold>Verkauf"));
     public static Inventory sellShop = Bukkit.createInventory(null, 54, MiniMessage.miniMessage().deserialize("<bold>Ankauf"));
 
-    public static Component manaName = MiniMessage.miniMessage().deserialize("<b><color:#ff5714>Speed Mana");
     public static Component notAvailableName = MiniMessage.miniMessage().deserialize("<red><bold>Not available");
-    public static Component lootBoxName = MiniMessage.miniMessage().deserialize("<color:#8a00b0><st>III</st> <b>LootBox </b><st>III");
-    public static Component ultra_gap = MiniMessage.miniMessage().deserialize("<b><gradient:#8a008a:#ff00ff>Ultra Goldapfel");
+
+    public static Component breadName = MiniMessage.miniMessage().deserialize("<b><color:#ff5714>Saftiges Brot");
+
     public static Component dirt_name = MiniMessage.miniMessage().deserialize("<color:#613613><b>Niete</b></color>");
     public static Component oak_name = MiniMessage.miniMessage().deserialize("<color:#696613><b>Holz</b></color>");
     public static Component diamond_name = MiniMessage.miniMessage().deserialize("<color:#37bddb><b>Diamant");
     public static Component iron_name = MiniMessage.miniMessage().deserialize("<gray><b>Eisen");
+
     public static Component diapicke_name = MiniMessage.miniMessage().deserialize("<gradient:#aaaaaa:#4d4d4d><b>Silke");
-    public static Component diamond_sword_name = MiniMessage.miniMessage().deserialize("<gradient:#aa0000:#ffcc00><b>Schwert des Professors");
     public static Component gluecky_name = MiniMessage.miniMessage().deserialize("<gradient:#aaaaaa:#4d4d4d><b>Gluecky");
+    public static Component diamond_sword_name = MiniMessage.miniMessage().deserialize("<gradient:#aa0000:#ffcc00><b>Schwert des Professors");
     public static Component monster_hunter = MiniMessage.miniMessage().deserialize("<b><gradient:#00aa00:#5555ff>Monster Hunter");
+    public static Component axe = MiniMessage.miniMessage().deserialize("<b><gradient:#aaaaaa:#4d4d4d>Axt of Diamond");
+    public static Component shovel = MiniMessage.miniMessage().deserialize("<b><gradient:#00aa00:#5555ff>Schaufel eines Piraten!");
+
     public static Component helm = MiniMessage.miniMessage().deserialize("<gradient:#55ffff:#00aa63><b>Helm des Ritters");
     public static Component chestplate = MiniMessage.miniMessage().deserialize("<gradient:#55ffff:#00aa63><b>Harnisch des Ritters");
     public static Component leggings = MiniMessage.miniMessage().deserialize("<gradient:#55ffff:#00aa63><b>Hose des Ritters");
     public static Component boots = MiniMessage.miniMessage().deserialize("<gradient:#55ffff:#00aa63><b>Schuhe des Ritters");
+
     public static Component manaBoostName = MiniMessage.miniMessage().deserialize("<b><color:#ff5714>Boost Mana");
+    public static Component manaName = MiniMessage.miniMessage().deserialize("<b><color:#ff5714>Speed Mana");
+
+    public static Component lootBoxName = MiniMessage.miniMessage().deserialize("<color:#8a00b0><st>III</st> <b>LootBox </b><st>III");
+    public static Component ultra_gap = MiniMessage.miniMessage().deserialize("<b><gradient:#8a008a:#ff00ff>Ultra Goldapfel");
+
+    public static Component totem = MiniMessage.miniMessage().deserialize("<gold>Totem eines echten Ritters");
+    public static Component rocket1 = MiniMessage.miniMessage().deserialize("<gradient:red:white>Rakete Stufe 1");
+    public static Component carrot = MiniMessage.miniMessage().deserialize("<color:#ff5714>Leckere Karotte");
+    public static Component steak = MiniMessage.miniMessage().deserialize("<color:#ff5714>Leckeres Steak");
+    public static Component upgrade_template = MiniMessage.miniMessage().deserialize("<gray>Upgrade Template");
+    public static Component silence = MiniMessage.miniMessage().deserialize("<blue>Silence - Armor Trim");
+    public static Component spire = MiniMessage.miniMessage().deserialize("<blue>Silence - Armor Spire");
+    public static Component dune = MiniMessage.miniMessage().deserialize("<blue>Silence - Armor Dune");
+    public static Component redstone = MiniMessage.miniMessage().deserialize("<red>Redstone");
+    public static Component gold = MiniMessage.miniMessage().deserialize("<gold>Gold");
+    public static Component slime = MiniMessage.miniMessage().deserialize("<green>Slime");
+    public static Component honey = MiniMessage.miniMessage().deserialize("<yellow>Honig");
+    public static Component lava = MiniMessage.miniMessage().deserialize("<color:#ff8400>Lava Eimer");
+    public static Component water = MiniMessage.miniMessage().deserialize("<blue>Wasser Eimer");
+    public static Component gunpowder = MiniMessage.miniMessage().deserialize("<gray>Schiesspulver");
+    public static Component paper = MiniMessage.miniMessage().deserialize("<white>Papier aus der Wueste");
+
+    public static Component otherStuffBuy = MiniMessage.miniMessage().deserialize("<color:#3b92d1>Weiteres");
+    public static Component invStuffBuy = MiniMessage.miniMessage().deserialize("<color:#3b92d1>Zurueck");
     public static void openShopGUI(Player player){
         for (int i = 0; i < 54; i++) {
             shop.setItem(i, ShopItem.convertToItemStack(ShopItems.NOT_AVAILABLE));
         }
 
-        shop.setItem(10, ShopItem.convertToItemStack(ShopItems.HELM));
-        //shop.setItem(1, ShopItem.convertToItemStack(ShopItems.LOOT_BOX));
-        shop.setItem(12, ShopItem.convertToItemStack(ShopItems.DIAMOND_SWORD));
-        shop.setItem(14, ShopItem.convertToItemStack(ShopItems.DIAMOND));
-        shop.setItem(16, ShopItem.convertToItemStack(ShopItems.DIRT));
-        shop.setItem(19, ShopItem.convertToItemStack(ShopItems.CHESTPLATE));
-        shop.setItem(21, ShopItem.convertToItemStack(ShopItems.MONSTER_HUNTER));
-        shop.setItem(23, ShopItem.convertToItemStack(ShopItems.ULTRA_GAP));
-        shop.setItem(25, ShopItem.convertToItemStack(ShopItems.OAK_PLANKS));
-        shop.setItem(28, ShopItem.convertToItemStack(ShopItems.LIGGINGS));
-        shop.setItem(30, ShopItem.convertToItemStack(ShopItems.DIAMOND_PICKAXE));
-        shop.setItem(32, ShopItem.convertToItemStack(ShopItems.MANA_SPEED));
-        shop.setItem(34, ShopItem.convertToItemStack(ShopItems.IRON));
-        shop.setItem(37, ShopItem.convertToItemStack(ShopItems.BOOTS));
-        shop.setItem(39, ShopItem.convertToItemStack(ShopItems.DIAMOND_PICKAXE_GLUECKY));
-        shop.setItem(41, ShopItem.convertToItemStack(ShopItems.MANA_BOOST));
+
+        player.openInventory(shop);
+
+    }
+    public static void openShop2GUI(Player player){
+        for (int i = 0; i < 54; i++) {
+            shop.setItem(i, ShopItem.convertToItemStack(ShopItems.NOT_AVAILABLE));
+        }
 
         player.openInventory(shop);
 

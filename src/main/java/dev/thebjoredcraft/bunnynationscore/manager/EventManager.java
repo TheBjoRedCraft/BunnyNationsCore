@@ -2,6 +2,8 @@ package dev.thebjoredcraft.bunnynationscore.manager;
 
 import dev.thebjoredcraft.bunnynationscore.BunnyNationsCore;
 import dev.thebjoredcraft.bunnynationscore.command.economy.SellCommand;
+import dev.thebjoredcraft.bunnynationscore.gui.BuyGraphicalUserInterfaceOne;
+import dev.thebjoredcraft.bunnynationscore.gui.BuyGraphicalUserInterfaceTwo;
 import dev.thebjoredcraft.bunnynationscore.util.ShopItem;
 import dev.thebjoredcraft.bunnynationscore.util.ShopItems;
 import net.kyori.adventure.key.Key;
@@ -99,199 +101,47 @@ public class EventManager implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
-        if (event.getView().getTopInventory() == ShopManager.shop) {
-            event.setCancelled(true);
-            if(event.getCurrentItem() != null){
-                if (event.getCurrentItem().getItemMeta().hasLocalizedName()) {
-                    Component component = event.getCurrentItem().getItemMeta().displayName();
+        try {
+            BuyGraphicalUserInterfaceOne.handle(event);
+            BuyGraphicalUserInterfaceTwo.handle(event);
+
+            if (event.getInventory() == ShopManager.sellShop) {
+                event.setCancelled(true);
+                if (event.getCurrentItem() != null && event.getCurrentItem().getType() != Material.AIR) {
+                    Material clickedMaterial = event.getCurrentItem().getType();
                     Player player = (Player) event.getWhoClicked();
-                    try {
-                        if (component.equals(ShopManager.manaName)) {
-                            ShopItems item = ShopItems.MANA_SPEED;
 
-                            if (PlayerDataManager.getMoney(player) >= item.getPrize()) {
-                                event.getWhoClicked().getLocation().getWorld().dropItem(event.getWhoClicked().getLocation(), ShopItem.convertToItemStack(item));
-                                PlayerDataManager.removeMoney(player, item.getPrize());
-                            } else {
-                                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du hast nicht genuegend Taler!"));
-                            }
-                        } else if (component.equals(ShopManager.lootBoxName)) {
-                            ShopItems item1 = ShopItems.LOOT_BOX;
+                    if (player.getInventory().contains(clickedMaterial)) {
+                        for (ItemStack s : player.getInventory().getContents()) {
+                            if (s != null) {
+                                if (s.getType() == clickedMaterial) {
+                                    Sound sound = Sound.sound(Key.key("block.note_block.bit"), Sound.Source.MASTER, 1f, 0f);
 
-                            if (PlayerDataManager.getMoney(player) >= item1.getPrize()) {
-                                event.getWhoClicked().getLocation().getWorld().dropItem(event.getWhoClicked().getLocation(), ShopItem.convertToItemStack(item1));
-                                PlayerDataManager.removeMoney(player, item1.getPrize());
-                            } else {
-                                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du hast nicht genuegend Taler!"));
-                            }
-                        } else if (component.equals(ShopManager.ultra_gap)) {
-                            ShopItems item3 = ShopItems.ULTRA_GAP;
-
-                            if (PlayerDataManager.getMoney(player) >= item3.getPrize()) {
-                                event.getWhoClicked().getLocation().getWorld().dropItem(event.getWhoClicked().getLocation(), ShopItem.convertToItemStack(item3));
-                                PlayerDataManager.removeMoney(player, item3.getPrize());
-                            } else {
-                                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du hast nicht genuegend Taler!"));
-                            }
-                        } else if (component.equals(ShopManager.diapicke_name)) {
-                            ShopItems item3 = ShopItems.DIAMOND_PICKAXE;
-
-                            if (PlayerDataManager.getMoney(player) >= item3.getPrize()) {
-                                event.getWhoClicked().getLocation().getWorld().dropItem(event.getWhoClicked().getLocation(), ShopItem.convertToItemStack(item3));
-                                PlayerDataManager.removeMoney(player, item3.getPrize());
-                            } else {
-                                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du hast nicht genuegend Taler!"));
-                            }
-                        } else if (component.equals(ShopManager.gluecky_name)) {
-                            ShopItems item3 = ShopItems.DIAMOND_PICKAXE_GLUECKY;
-
-                            if (PlayerDataManager.getMoney(player) >= item3.getPrize()) {
-                                event.getWhoClicked().getLocation().getWorld().dropItem(event.getWhoClicked().getLocation(), ShopItem.convertToItemStack(item3));
-                                PlayerDataManager.removeMoney(player, item3.getPrize());
-                            } else {
-                                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du hast nicht genuegend Taler!"));
-                            }
-                        } else if (component.equals(ShopManager.oak_name)) {
-                            ShopItems item3 = ShopItems.OAK_PLANKS;
-
-                            if (PlayerDataManager.getMoney(player) >= item3.getPrize()) {
-                                event.getWhoClicked().getLocation().getWorld().dropItem(event.getWhoClicked().getLocation(), ShopItem.convertToItemStack(item3));
-                                PlayerDataManager.removeMoney(player, item3.getPrize());
-                            } else {
-                                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du hast nicht genuegend Taler!"));
-                            }
-                        } else if (component.equals(ShopManager.diamond_sword_name)) {
-                            ShopItems item3 = ShopItems.DIAMOND_SWORD;
-
-                            if (PlayerDataManager.getMoney(player) >= item3.getPrize()) {
-                                event.getWhoClicked().getLocation().getWorld().dropItem(event.getWhoClicked().getLocation(), ShopItem.convertToItemStack(item3));
-                                PlayerDataManager.removeMoney(player, item3.getPrize());
-                            } else {
-                                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du hast nicht genuegend Taler!"));
-                            }
-                        } else if (component.equals(ShopManager.iron_name)) {
-                            ShopItems item3 = ShopItems.IRON;
-
-                            if (PlayerDataManager.getMoney(player) >= item3.getPrize()) {
-                                event.getWhoClicked().getLocation().getWorld().dropItem(event.getWhoClicked().getLocation(), ShopItem.convertToItemStack(item3));
-                                PlayerDataManager.removeMoney(player, item3.getPrize());
-                            } else {
-                                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du hast nicht genuegend Taler!"));
-                            }
-                        } else if (component.equals(ShopManager.dirt_name)) {
-                            ShopItems item3 = ShopItems.DIRT;
-
-                            if (PlayerDataManager.getMoney(player) >= item3.getPrize()) {
-                                event.getWhoClicked().getLocation().getWorld().dropItem(event.getWhoClicked().getLocation(), ShopItem.convertToItemStack(item3));
-                                PlayerDataManager.removeMoney(player, item3.getPrize());
-                            } else {
-                                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du hast nicht genuegend Taler!"));
-                            }
-                        } else if (component.equals(ShopManager.diamond_name)) {
-                            ShopItems item3 = ShopItems.DIAMOND;
-
-                            if (PlayerDataManager.getMoney(player) >= item3.getPrize()) {
-                                event.getWhoClicked().getLocation().getWorld().dropItem(event.getWhoClicked().getLocation(), ShopItem.convertToItemStack(item3));
-                                PlayerDataManager.removeMoney(player, item3.getPrize());
-                            } else {
-                                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du hast nicht genuegend Taler!"));
-                            }
-                        } else if (component.equals(ShopManager.monster_hunter)) {
-                            ShopItems item3 = ShopItems.MONSTER_HUNTER;
-
-                            if (PlayerDataManager.getMoney(player) >= item3.getPrize()) {
-                                event.getWhoClicked().getLocation().getWorld().dropItem(event.getWhoClicked().getLocation(), ShopItem.convertToItemStack(item3));
-                                PlayerDataManager.removeMoney(player, item3.getPrize());
-                            } else {
-                                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du hast nicht genuegend Taler!"));
-                            }
-                        } else if (component.equals(ShopManager.helm)) {
-                            ShopItems item3 = ShopItems.HELM;
-
-                            if (PlayerDataManager.getMoney(player) >= item3.getPrize()) {
-                                event.getWhoClicked().getLocation().getWorld().dropItem(event.getWhoClicked().getLocation(), ShopItem.convertToItemStack(item3));
-                                PlayerDataManager.removeMoney(player, item3.getPrize());
-                            } else {
-                                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du hast nicht genuegend Taler!"));
-                            }
-                        } else if (component.equals(ShopManager.chestplate)) {
-                            ShopItems item3 = ShopItems.CHESTPLATE;
-
-                            if (PlayerDataManager.getMoney(player) >= item3.getPrize()) {
-                                event.getWhoClicked().getLocation().getWorld().dropItem(event.getWhoClicked().getLocation(), ShopItem.convertToItemStack(item3));
-                                PlayerDataManager.removeMoney(player, item3.getPrize());
-                            } else {
-                                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du hast nicht genuegend Taler!"));
-                            }
-                        } else if (component.equals(ShopManager.leggings)) {
-                            ShopItems item3 = ShopItems.LIGGINGS;
-
-                            if (PlayerDataManager.getMoney(player) >= item3.getPrize()) {
-                                event.getWhoClicked().getLocation().getWorld().dropItem(event.getWhoClicked().getLocation(), ShopItem.convertToItemStack(item3));
-                                PlayerDataManager.removeMoney(player, item3.getPrize());
-                            } else {
-                                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du hast nicht genuegend Taler!"));
-                            }
-                        } else if (component.equals(ShopManager.boots)) {
-                            ShopItems item3 = ShopItems.BOOTS;
-
-                            if (PlayerDataManager.getMoney(player) >= item3.getPrize()) {
-                                event.getWhoClicked().getLocation().getWorld().dropItem(event.getWhoClicked().getLocation(), ShopItem.convertToItemStack(item3));
-                                PlayerDataManager.removeMoney(player, item3.getPrize());
-                            } else {
-                                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du hast nicht genuegend Taler!"));
-                            }
-                        } else if (component.equals(ShopManager.manaBoostName)) {
-                            ShopItems item3 = ShopItems.MANA_BOOST;
-
-                            if (PlayerDataManager.getMoney(player) >= item3.getPrize()) {
-                                event.getWhoClicked().getLocation().getWorld().dropItem(event.getWhoClicked().getLocation(), ShopItem.convertToItemStack(item3));
-                                PlayerDataManager.removeMoney(player, item3.getPrize());
-                            } else {
-                                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du hast nicht genuegend Taler!"));
+                                    PlayerDataManager.addMoney(player, SellCommand.itemsToSell.get(clickedMaterial));
+                                    player.playSound(sound);
+                                    player.sendActionBar(MiniMessage.miniMessage().deserialize("<color:#3b92d1>+" + SellCommand.itemsToSell.get(clickedMaterial)));
+                                    s.setAmount(s.getAmount() - 1);
+                                    return;
+                                }
                             }
                         }
-                    }catch (NullPointerException e){
-                        player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du hast noch kein Geld!"));
-                        PlayerDataManager.addMoney(player, 1);
+
+                    } else {
+                        player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du hast dises Item nicht!"));
                     }
                 }
             }
+            //        if (event.getInventory().getType().equals(InventoryType.CRAFTING) && event.getSlot() == 40) {
+            //            ItemStack clickedItem = event.getCurrentItem();
+            //            if (clickedItem != null) {
+            //                if (clickedItem.getItemMeta().displayName().equals(ShopManager.manaName)) {
+            //                    event.setCancelled(true);
+            //                }
+            //            }
+            //        }
+        }catch (NullPointerException ignored){
+            //
         }
-        if (event.getInventory() == ShopManager.sellShop) {
-            event.setCancelled(true);
-            if (event.getCurrentItem() != null && event.getCurrentItem().getType() != Material.AIR) {
-                Material clickedMaterial = event.getCurrentItem().getType();
-                Player player = (Player) event.getWhoClicked();
-
-                if (player.getInventory().contains(clickedMaterial)) {
-                    for(ItemStack s : player.getInventory().getContents()){
-                        if(s != null){
-                            if(s.getType() == clickedMaterial) {
-                                Sound sound = Sound.sound(Key.key("block.note_block.bit"), Sound.Source.MASTER, 1f, 0f);
-
-                                PlayerDataManager.addMoney(player, SellCommand.itemsToSell.get(clickedMaterial));
-                                player.playSound(sound);
-                                player.sendActionBar(MiniMessage.miniMessage().deserialize("<color:#3b92d1>+" + SellCommand.itemsToSell.get(clickedMaterial)));
-                                s.setAmount(s.getAmount() - 1);
-                                return;
-                            }
-                        }
-                    }
-
-                } else {
-                    player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Du hast dises Item nicht!"));
-                }
-            }
-        }
-        //        if (event.getInventory().getType().equals(InventoryType.CRAFTING) && event.getSlot() == 40) {
-        //            ItemStack clickedItem = event.getCurrentItem();
-        //            if (clickedItem != null) {
-        //                if (clickedItem.getItemMeta().displayName().equals(ShopManager.manaName)) {
-        //                    event.setCancelled(true);
-        //                }
-        //            }
-        //        }
     }
     //    @EventHandler
     //    public void onSwap(PlayerSwapHandItemsEvent event) {
@@ -313,7 +163,7 @@ public class EventManager implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEntityEvent event){
         if(event.getRightClicked().getScoreboardTags().contains(ShopManager.traderTag)){
-            ShopManager.openShopGUI(event.getPlayer());
+            BuyGraphicalUserInterfaceOne.open(event.getPlayer());
         }else if(event.getRightClicked().getScoreboardTags().contains(ShopManager.traderSellTag)){
             ShopManager.openSellGUI(event.getPlayer());
         }
@@ -344,6 +194,16 @@ public class EventManager implements Listener {
                 } else if (event.getPlayer().getItemInHand().getItemMeta().displayName().equals(ShopManager.diapicke_name) && !event.getPlayer().getItemInHand().getItemMeta().hasEnchants()) {
 
                     event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.SILK_TOUCH, 1);
+                    event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.DIG_SPEED, 7);
+                    event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.DURABILITY, 5);
+                    event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                } else if (event.getPlayer().getItemInHand().getItemMeta().displayName().equals(ShopManager.shovel) && !event.getPlayer().getItemInHand().getItemMeta().hasEnchants()) {
+
+                    event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.DIG_SPEED, 7);
+                    event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.DURABILITY, 5);
+                    event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                } else if (event.getPlayer().getItemInHand().getItemMeta().displayName().equals(ShopManager.axe) && !event.getPlayer().getItemInHand().getItemMeta().hasEnchants()) {
+
                     event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.DIG_SPEED, 7);
                     event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.DURABILITY, 5);
                     event.getPlayer().getItemInHand().addUnsafeEnchantment(Enchantment.MENDING, 1);
@@ -378,49 +238,57 @@ public class EventManager implements Listener {
     }
     @EventHandler
     public void onDamage(EntityDamageEvent event){
-        if(event.getEntity() instanceof Player player){
-            if(player.getInventory().getHelmet() != null){
-                if(player.getInventory().getHelmet().getItemMeta().displayName() != null) {
-                    if (player.getInventory().getHelmet().getItemMeta().displayName().equals(ShopManager.helm)) {
-                        player.getInventory().getHelmet().addUnsafeEnchantment(Enchantment.MENDING, 1);
-                        player.getInventory().getHelmet().addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
-                        player.getInventory().getHelmet().addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-                        player.getInventory().getHelmet().addUnsafeEnchantment(Enchantment.MENDING, 1);
+        if(event.getEntity() instanceof Player player) {
+            if (player.getInventory().getHelmet() != null) {
+                if(player.getInventory().getHelmet().hasItemMeta()){
+                    if (player.getInventory().getHelmet().getItemMeta().displayName() != null) {
+                        if (player.getInventory().getHelmet().getItemMeta().displayName().equals(ShopManager.helm)) {
+                            player.getInventory().getHelmet().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                            player.getInventory().getHelmet().addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
+                            player.getInventory().getHelmet().addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+                            player.getInventory().getHelmet().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                        }
                     }
                 }
             }
-            if(player.getInventory().getChestplate() != null) {
-                if(player.getInventory().getHelmet().getItemMeta().displayName() != null) {
-                    if (player.getInventory().getChestplate().getItemMeta().displayName().equals(ShopManager.chestplate)) {
-                        player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.MENDING, 1);
-                        player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
-                        player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 5);
-                        player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-                        player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.MENDING, 1);
+            if (player.getInventory().getChestplate() != null) {
+                if(player.getInventory().getChestplate().hasItemMeta()) {
+                    if (player.getInventory().getChestplate().getItemMeta().displayName() != null) {
+                        if (player.getInventory().getChestplate().getItemMeta().displayName().equals(ShopManager.chestplate)) {
+                            player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                            player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
+                            player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 5);
+                            player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+                            player.getInventory().getChestplate().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                        }
                     }
                 }
             }
             if (player.getInventory().getLeggings() != null) {
-                if(player.getInventory().getHelmet().getItemMeta().displayName() != null) {
-                    if (player.getInventory().getLeggings().getItemMeta().displayName().equals(ShopManager.leggings)) {
-                        player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.MENDING, 1);
-                        player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
-                        player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 5);
-                        player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-                        player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                if(player.getInventory().getLeggings().hasItemMeta()) {
+                    if (player.getInventory().getLeggings().getItemMeta().displayName() != null) {
+                        if (player.getInventory().getLeggings().getItemMeta().displayName().equals(ShopManager.leggings)) {
+                            player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                            player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
+                            player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.SWIFT_SNEAK, 5);
+                            player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+                            player.getInventory().getLeggings().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                        }
                     }
                 }
             }
             if (player.getInventory().getBoots() != null) {
-                if (player.getInventory().getHelmet().getItemMeta().displayName() != null) {
-                    if (player.getInventory().getBoots().getItemMeta().displayName().equals(ShopManager.boots)) {
-                        player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.MENDING, 1);
-                        player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
-                        player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 5);
-                        player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.WATER_WORKER, 5);
-                        player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.SOUL_SPEED, 5);
-                        player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-                        player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                if(player.getInventory().getBoots().hasItemMeta()) {
+                    if (player.getInventory().getBoots().getItemMeta().displayName() != null) {
+                        if (player.getInventory().getBoots().getItemMeta().displayName().equals(ShopManager.boots)) {
+                            player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                            player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
+                            player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 5);
+                            player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.DEPTH_STRIDER, 5);
+                            player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.SOUL_SPEED, 5);
+                            player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+                            player.getInventory().getBoots().addUnsafeEnchantment(Enchantment.MENDING, 1);
+                        }
                     }
                 }
             }

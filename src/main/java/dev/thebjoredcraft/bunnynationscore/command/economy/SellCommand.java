@@ -1,9 +1,6 @@
 package dev.thebjoredcraft.bunnynationscore.command.economy;
 
-import dev.thebjoredcraft.bunnynationscore.manager.PlayerDataManager;
 import dev.thebjoredcraft.bunnynationscore.manager.ShopManager;
-import net.kyori.adventure.key.Key;
-import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -21,12 +18,12 @@ public class SellCommand implements CommandExecutor {
         if(sender instanceof Player player){
             if(args.length == 1 && args[0].equalsIgnoreCase("list")){
                 player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>Zum Verkauf:"));
-                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>1x Diamant - 50 Taler"));
+                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>1x Diamant - 35 Taler"));
                 player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>1x Iron Ingot - 25 Taler"));
                 player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>1x Gold Ingot - 50 Taler"));
                 player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>1x Emerald - 20 Taler"));
                 player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>1x Oak Holz Stamm - 1 Taler"));
-                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>1x Blaze Rod - 50 Taler"));
+                player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>1x Blaze Rod - 25 Taler"));
                 player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>1x Kohle - 25 Taler"));
                 player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>1x Drachen Kopf - 1000 Taler"));
                 player.sendMessage(MiniMessage.miniMessage().deserialize("<color:#3b92d1>1x Drachen Ei - 1000000 Taler"));

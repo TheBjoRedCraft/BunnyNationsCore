@@ -4,6 +4,8 @@ main: dev.thebjoredcraft.bunnynationscore.BunnyNationsCore
 api-version: '1.20'
 author: TheBjoRedCraft
 commands:
+  armorsee:
+    permission: bunnynationscore.command.armorsee
   sell:
     permission: bunnynationscore.command.sell
   actionbar:
