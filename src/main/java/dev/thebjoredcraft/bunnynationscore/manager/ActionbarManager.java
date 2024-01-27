@@ -30,7 +30,7 @@ public class ActionbarManager {
     }
     public static void startActionbar(){
         messages.put(1, "<color:#3b92d1>Du hast aktuell <bold>%money% <reset><color:#3b92d1>Taler!");
-        messages.put(2, "<color:#3b92d1>hosted by DeSynch and Hexle");
+        messages.put(2, "<color:#3b92d1>Hexle");
         custom = true;
         runnable = new BukkitRunnable() {
             @Override
